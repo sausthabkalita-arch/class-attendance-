@@ -1,83 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>Class Attendance</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Class Attendance</title>
+  <style>
+    :root {
+      --primary-color: #6366f1;
+      --primary-hover: #4f46e5;
+      --accent-color: #ec4899;
+      --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311042 100%);
+      --card-bg: rgba(255, 255, 255, 0.08);
+      --card-border: rgba(255, 255, 255, 0.15);
+      --text-color: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 2.5rem;
+      border-radius: 1.25rem;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+      width: 100%;
+      max-width: 420px;
+      border: 1px solid var(--card-border);
+    }
+
+    h2 {
+      margin-top: 0;
+      margin-bottom: 1.5rem;
+      font-size: 1.875rem;
+      font-weight: 700;
+      text-align: center;
+      background: linear-gradient(to right, #818cf8, var(--accent-color));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    select {
+      width: 100%;
+      padding: 0.85rem;
+      border: 1px solid var(--card-border);
+      border-radius: 0.6rem;
+      font-size: 1rem;
+      color: var(--text-color);
+      background-color: rgba(15, 23, 42, 0.6);
+      transition: all 0.2s ease;
+      box-sizing: border-box;
+    }
+
+    select:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
+    }
+
+    option {
+      background-color: #0f172a;
+      color: var(--text-color);
+    }
+
+    button {
+      width: 100%;
+      padding: 0.85rem;
+      background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+      color: white;
+      border: none;
+      border-radius: 0.6rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 14px 0 rgba(99, 102, 241, 0.39);
+      transition: transform 0.15s ease, opacity 0.2s ease;
+    }
+
+    button:hover {
+      opacity: 0.92;
+      transform: translateY(-1px);
+    }
+
+    button:active {
+      transform: translateY(1px);
+    }
+  </style>
 </head>
 <body>
- <h2>Mark Attendance</h2>
 
- <form id="attendanceForm">
- <label for="studentSelect">Select Student:</label>
- <select id="studentSelect" required>
- <option value="" disabled selected>Choose a student</option>
- </select>
- <button type="button" onclick="handleSubmit()">Submit</button>
- </form>
+  <div class="container">
+    <h2>Mark Attendance</h2>
+    <form id="attendanceForm">
+      <div class="form-group">
+        <label for="studentSelect">Select Student</label>
+        <select id="studentSelect" required>
+          <option value="" disabled selected>Choose a student...</option>
+        </select>
+      </div>
+      <button type="button" onclick="handleSubmit()">Submit Attendance</button>
+    </form>
+  </div>
 
- <script>
- const students = [
- { id: "2511011776", name: "RAGINI BAISHYA" },
- { id: "2511011777", name: "MUKRANG PHANGCHO" },
- { id: "2511011778", name: "SAUSTHAB KALITA" },
- { id: "2511011779", name: "BHRANTIKA LAHKAR" },
- { id: "2511011780", name: "SHABNOM REZWANA LASKAR" },
- { id: "2511011781", name: "KRISHAN KASHYAP" },
- { id: "2511034371", name: "HARSHITA CHOUDHURY" },
- { id: "2511034480", name: "BANDITA DAS" },
- { id: "2511034488", name: "NISHITA DEORI" },
- { id: "2511034530", name: "NANDINI KASHYAP" },
- { id: "2511035779", name: "MINAKSHI SAHOO" },
- { id: "2511035983", name: "NAYANA KONWAR" },
- { id: "2511083450", name: "RIMA PRADHAN" },
- { id: "2511089877", name: "JUBLY DEKA" },
- { id: "2511090537", name: "PURBASHARA HATI BORUAH" },
- { id: "2511090540", name: "UPASANA DAS" },
- { id: "2511090544", name: "AMAN BASUMATARY" },
- { id: "2511090547", name: "JASMINA PARVIN" },
- { id: "2511091075", name: "BIDISHA DAS" },
- { id: "2511091078", name: "DIGVIJAY DUTTA" },
- { id: "2511091164", name: "NILANJANA DEKA" },
- { id: "2511091165", name: "RAJDEEP DAS" }
- ];
+  <script>
+    const students = [
+      { id: "2511011776", name: "RAGINI BAISHYA" },
+      { id: "2511011777", name: "MUKRANG PHANGCHO" },
+      { id: "2511011778", name: "SAUSTHAB KALITA" },
+      { id: "2511011779", name: "BHRANTIKA LAHKAR" },
+      { id: "2511011780", name: "SHABNOM REZWANA LASKAR" },
+      { id: "2511011781", name: "KRISHAN KASHYAP" },
+      { id: "2511034371", name: "HARSHITA CHOUDHURY" },
+      { id: "2511034480", name: "BANDITA DAS" },
+      { id: "2511034488", name: "NISHITA DEORI" },
+      { id: "2511034530", name: "NANDINI KASHYAP" },
+      { id: "2511035779", name: "MINAKSHI SAHOO" },
+      { id: "2511035983", name: "NAYANA KONWAR" },
+      { id: "2511083450", name: "RIMA PRADHAN" },
+      { id: "2511089877", name: "JUBLY DEKA" },
+      { id: "2511090537", name: "PURBASHARA HATI BORUAH" },
+      { id: "2511090540", name: "UPASANA DAS" },
+      { id: "2511090544", name: "AMAN BASUMATARY" },
+      { id: "2511090547", name: "JASMINA PARVIN" },
+      { id: "2511091075", name: "BIDISHA DAS" },
+      { id: "2511091078", name: "DIGVIJAY DUTTA" },
+      { id: "2511091164", name: "NILANJANA DEKA" },
+      { id: "2511091165", name: "RAJDEEP DAS" }
+    ];
 
- const selectElem = document.getElementById("studentSelect");
- students.forEach((student, index) => {
- const option = document.createElement("option");
- option.value = index;
- option.textContent = `${student.id} - ${student.name}`;
- selectElem.appendChild(option);
- });
+    const selectElem = document.getElementById("studentSelect");
+    students.forEach((student, index) => {
+      const option = document.createElement("option");
+      option.value = index;
+      option.textContent = `${student.id} - ${student.name}`;
+      selectElem.appendChild(option);
+    });
 
- const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyIhYStDfGbVva78aTpLd9NplLOsozgp5qlUhEHmTmld-5yaqEDi1wSqTc_sd7YrpHB/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxvuDUXE6F_45NYL1Q7cW04KIL-XNiOoNiVivqRK_4ND5edEVLqI58NXcP6m1GIMZwM/exec";
 
- function handleSubmit() {
- const selectedIndex = selectElem.value;
- if (selectedIndex === "") {
- alert("Please select a student!");
- return;
- }
+    function handleSubmit() {
+      const selectedIndex = selectElem.value;
+      if (selectedIndex === "") {
+        alert("Please select a student!");
+        return;
+      }
 
- const selectedStudent = students[selectedIndex];
+      const selectedStudent = students[selectedIndex];
 
- fetch(SCRIPT_URL, {
- method: "POST",
- mode: "no-cors",
- headers: {
- "Content-Type": "application/json"
- },
- body: JSON.stringify(selectedStudent)
- })
- .then(() => {
- alert(`Attendance recorded for ${selectedStudent.name}!`);
- selectElem.value = "";
- })
- .catch(error => {
- console.error("Error submitting attendance:", error);
- alert("Failed to submit attendance.");
- });
- }
- </script>
+      fetch(SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(selectedStudent)
+      })
+      .then(() => {
+        alert(`Attendance recorded for ${selectedStudent.name}!`);
+        selectElem.value = "";
+      })
+      .catch(error => {
+        console.error("Error submitting attendance:", error);
+        alert("Failed to submit attendance.");
+      });
+    }
+  </script>
 </body>
 </html>
