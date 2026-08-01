@@ -1,72 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Class Attendance Tracker 2026</title>
-  <style>
-    body { font-family: Arial, sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
-    h2 { text-align: center; }
-    label { font-weight: bold; display: block; margin-top: 15px; }
-    select, input, button { width: 100%; padding: 10px; margin-top: 5px; border-radius: 5px; border: 1px solid #ccc; box-sizing: border-box; }
-    button { background-color: #28a745; color: white; font-weight: bold; font-size: 16px; margin-top: 20px; cursor: pointer; }
-    button:hover { background-color: #218838; }
-    #status { margin-top: 15px; text-align: center; font-weight: bold; }
-  </style>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Class Attendance</title>
 </head>
 <body>
+ <h2>Mark Attendance</h2>
 
-  <h2>Daily Attendance - 2026</h2>
+ <form id="attendanceForm">
+ <label for="studentSelect">Select Student:</label>
+ <select id="studentSelect" required>
+ <option value="" disabled selected>Choose a student</option>
+ </select>
+ <button type="button" onclick="handleSubmit()">Submit</button>
+ </form>
 
-  <form id="attendanceForm">
-    <label for="student">Select Student:</label>
-    <select id="student" required>
-      <option value="">-- Choose your name --</option>
-      <option value="2511011776 - RAGINI BAISHYA">2511011776 - RAGINI BAISHYA</option>
-      <option value="2511011777 - MUKRANG PHANGCHO">2511011777 - MUKRANG PHANGCHO</option>
-      <option value="2511011778 - SAUSTHAB KALITA">2511011778 - SAUSTHAB KALITA</option>
-      <option value="2511011779 - BHRANTIKA LAHKAR">2511011779 - BHRANTIKA LAHKAR</option>
-      <option value="2511011780 - SHABNOM REZWANA LASKAR">2511011780 - SHABNOM REZWANA LASKAR</option>
-      <option value="2511011781 - KRISHAN KASHYAP">2511011781 - KRISHAN KASHYAP</option>
-      <option value="2511034371 - HARSHITA CHOUDHURY">2511034371 - HARSHITA CHOUDHURY</option>
-      <option value="2511034480 - BANDITA DAS">2511034480 - BANDITA DAS</option>
-      <option value="2511034488 - NISHITA DEORI">2511034488 - NISHITA DEORI</option>
-      <option value="2511034530 - NANDINI KASHYAP">2511034530 - NANDINI KASHYAP</option>
-      <option value="2511035779 - MINAKSHI SAHOO">2511035779 - MINAKSHI SAHOO</option>
-      <option value="2511035983 - NAYANA KONWAR">2511035983 - NAYANA KONWAR</option>
-      <option value="2511083450 - RIMA PRADHAN">2511083450 - RIMA PRADHAN</option>
-      <option value="2511089877 - JUBLY DEKA">2511089877 - JUBLY DEKA</option>
-      <option value="2511090537 - PURBASHARA HATI BORUAH">2511090537 - PURBASHARA HATI BORUAH</option>
-      <option value="2511090540 - UPASANA DAS">2511090540 - UPASANA DAS</option>
-      <option value="2511090544 - AMAN BASUMATARY">2511090544 - AMAN BASUMATARY</option>
-      <option value="2511090547 - JASMINA PARVIN">2511090547 - JASMINA PARVIN</option>
-      <option value="2511091075 - BIDISHA DAS">2511091075 - BIDISHA DAS</option>
-      <option value="2511091078 - DIGVIJAY DUTTA">2511091078 - DIGVIJAY DUTTA</option>
-      <option value="2511091164 - NILANJANA DEKA">2511091164 - NILANJANA DEKA</option>
-      <option value="2511091165 - RAJDEEP DAS">2511091165 - RAJDEEP DAS</option>
-    </select>
+ <script>
+ const students = [
+ { id: "2511011776", name: "RAGINI BAISHYA" },
+ { id: "2511011777", name: "MUKRANG PHANGCHO" },
+ { id: "2511011778", name: "SAUSTHAB KALITA" },
+ { id: "2511011779", name: "BHRANTIKA LAHKAR" },
+ { id: "2511011780", name: "SHABNOM REZWANA LASKAR" },
+ { id: "2511011781", name: "KRISHAN KASHYAP" },
+ { id: "2511034371", name: "HARSHITA CHOUDHURY" },
+ { id: "2511034480", name: "BANDITA DAS" },
+ { id: "2511034488", name: "NISHITA DEORI" },
+ { id: "2511034530", name: "NANDINI KASHYAP" },
+ { id: "2511035779", name: "MINAKSHI SAHOO" },
+ { id: "2511035983", name: "NAYANA KONWAR" },
+ { id: "2511083450", name: "RIMA PRADHAN" },
+ { id: "2511089877", name: "JUBLY DEKA" },
+ { id: "2511090537", name: "PURBASHARA HATI BORUAH" },
+ { id: "2511090540", name: "UPASANA DAS" },
+ { id: "2511090544", name: "AMAN BASUMATARY" },
+ { id: "2511090547", name: "JASMINA PARVIN" },
+ { id: "2511091075", name: "BIDISHA DAS" },
+ { id: "2511091078", name: "DIGVIJAY DUTTA" },
+ { id: "2511091164", name: "NILANJANA DEKA" },
+ { id: "2511091165", name: "RAJDEEP DAS" }
+ ];
 
-    <label for="date">Select Date:</label>
-    <input type="date" id="date" min="2026-01-01" max="2026-12-31" required>
+ const selectElem = document.getElementById("studentSelect");
+ students.forEach((student, index) => {
+ const option = document.createElement("option");
+ option.value = index;
+ option.textContent = `${student.id} - ${student.name}`;
+ selectElem.appendChild(option);
+ });
 
-    <button type="submit">Mark Present</button>
-  </form>
+ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz8RAgZPlruPzWtFlg1I6sQaTa4ox1Uaps3E8Wr2-a26Nt4jJq-6FHDP2XCWz_T5P1R/exec";
 
-  <p id="status"></p>
+ function handleSubmit() {
+ const selectedIndex = selectElem.value;
+ if (selectedIndex === "") {
+ alert("Please select a student!");
+ return;
+ }
 
-  <script>
-    // Automatically default date input to today
-    document.getElementById('date').valueAsDate = new Date();
+ const selectedStudent = students[selectedIndex];
 
-    document.getElementById('attendanceForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const student = document.getElementById('student').value;
-      const date = document.getElementById('date').value;
-
-      // Connect your database API endpoint here (e.g., SheetDB or Firebase)
-      document.getElementById('status').innerText = `✅ Marked present for ${student} on ${date}!`;
-      document.getElementById('status').style.color = "green";
-    });
-  </script>
+ fetch(SCRIPT_URL, {
+ method: "POST",
+ mode: "no-cors",
+ headers: {
+ "Content-Type": "application/json"
+ },
+ body: JSON.stringify(selectedStudent)
+ })
+ .then(() => {
+ alert(`Attendance recorded for ${selectedStudent.name}!`);
+ selectElem.value = "";
+ })
+ .catch(error => {
+ console.error("Error submitting attendance:", error);
+ alert("Failed to submit attendance.");
+ });
+ }
+ </script>
 </body>
 </html>
